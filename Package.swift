@@ -20,6 +20,7 @@ let package = Package(
             cxxSettings: [
                 .define("THREADS"),
                 .define("LINUX"),
+                .define("FESTIVAL_SUPPRESS_STDOUT_LOGS"),
                 .headerSearchPath("compat"),
                 .unsafeFlags(["-std=c++17"]),
             ]

@@ -94,5 +94,12 @@ typedef int box_mat[MAX_BOXES][MAX_BOXES];
 #define VISUAL_STUDIO
 #endif
 
+#if defined(FESTIVAL_SUPPRESS_STDOUT_LOGS)
+#include <stdio.h>
+#ifdef printf
+#undef printf
+#endif
+#define printf(...) ((int)0)
+#endif
 
 #endif

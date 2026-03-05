@@ -20,7 +20,9 @@
 
 void exit_with_error(const char *message)
 {
-	throw std::runtime_error(message != 0 ? message : "Festival error");
+	const char *resolved_message = (message != 0 ? message : "Festival error");
+	fprintf(stderr, "FATAL: %s\n", resolved_message);
+	throw std::runtime_error(resolved_message);
 }
 
 int is_same_seq(UINT_8 *a, UINT_8 *b, int len)
