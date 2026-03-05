@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "Festival",
+    name: "SwiftFestivalSolver",
     platforms: [
         .macOS(.v13),
     ],
     products: [
         .library(
-            name: "Festival",
-            targets: ["Festival"]
+            name: "SwiftFestivalSolver",
+            targets: ["SwiftFestivalSolver"]
         ),
     ],
     targets: [
@@ -25,12 +25,14 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Festival",
-            dependencies: ["CFestival"]
+            name: "SwiftFestivalSolver",
+            dependencies: ["CFestival"],
+            path: "Sources/SwiftFestivalSolver"
         ),
         .testTarget(
-            name: "FestivalTests",
-            dependencies: ["Festival"]
+            name: "SwiftFestivalSolverTests",
+            dependencies: ["SwiftFestivalSolver"],
+            path: "Tests/SwiftFestivalSolverTests"
         ),
     ]
 )

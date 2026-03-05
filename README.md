@@ -11,13 +11,13 @@ This is not a clean-room rewrite of the solving algorithms. The original Festiva
 
 - `Sources/CFestival/festival_3.1__src`: original Festival solver source code
 - `Sources/CFestival/FestivalBridge.cpp`: C bridge for invoking Festival
-- `Sources/Festival/Festival.swift`: Swift API (`FestivalEngine`)
+- `Sources/SwiftFestivalSolver/SwiftFestivalSolver.swift`: Swift API (`SwiftFestivalSolverEngine`)
 - `Sources/CFestival/compat`: portability headers used for package builds
 
 ## Build And Test
 
 ```bash
-cd Festival
+cd SwiftFestivalSolver
 swift build -c release
 swift test -c release
 ```
@@ -30,7 +30,7 @@ Add as a local dependency:
 .package(url: "https://github.com/jollyjinx/SwiftFestivalSolver", from: "0.0.1")
 ```
 
-Then depend on product `Festival` and call `FestivalEngine.solve(levelText:configuration:)`.
+Then depend on product `SwiftFestivalSolver` and call `SwiftFestivalSolverEngine.solve(levelText:configuration:)`.
 
 ## License
 

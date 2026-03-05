@@ -1,7 +1,7 @@
 import CFestival
 import Foundation
 
-public struct FestivalSolveConfiguration: Hashable, Sendable {
+public struct SwiftFestivalSolverSolveConfiguration: Hashable, Sendable {
     public var timeLimitSeconds: Int
     public var cores: Int
 
@@ -11,20 +11,20 @@ public struct FestivalSolveConfiguration: Hashable, Sendable {
     }
 }
 
-public enum FestivalSolveStatus: Hashable, Sendable {
+public enum SwiftFestivalSolverSolveStatus: Hashable, Sendable {
     case solved
     case unsolved
 }
 
-public struct FestivalSolveResult: Hashable, Sendable {
-    public let status: FestivalSolveStatus
+public struct SwiftFestivalSolverSolveResult: Hashable, Sendable {
+    public let status: SwiftFestivalSolverSolveStatus
     public let minimumMoves: Int
     public let minimumPushes: Int
     public let lurd: String?
     public let message: String?
 
     public init(
-        status: FestivalSolveStatus,
+        status: SwiftFestivalSolverSolveStatus,
         minimumMoves: Int,
         minimumPushes: Int,
         lurd: String?,
@@ -38,7 +38,7 @@ public struct FestivalSolveResult: Hashable, Sendable {
     }
 }
 
-public enum FestivalEngineError: Error, LocalizedError, Sendable {
+public enum SwiftFestivalSolverEngineError: Error, LocalizedError, Sendable {
     case invocationFailed(String)
     case solverError(String)
     case invalidSolvedResult
@@ -50,16 +50,16 @@ public enum FestivalEngineError: Error, LocalizedError, Sendable {
         case let .solverError(message):
             return message
         case .invalidSolvedResult:
-            return "Festival reported solved but did not provide a LURD solution."
+            return "SwiftFestivalSolver reported solved but did not provide a LURD solution."
         }
     }
 }
 
-public enum FestivalEngine {
+public enum SwiftFestivalSolverEngine {
     public static func solve(
         levelText: String,
-        configuration: FestivalSolveConfiguration = .init()
-    ) throws -> FestivalSolveResult {
+        configuration: SwiftFestivalSolverSolveConfiguration = .init()
+    ) throws -> SwiftFestivalSolverSolveResult {
         let solvedStatus = Int32(bitPattern: CFESTIVAL_STATUS_SOLVED.rawValue)
         let unsolvedStatus = Int32(bitPattern: CFESTIVAL_STATUS_UNSOLVED.rawValue)
         let errorStatus = Int32(bitPattern: CFESTIVAL_STATUS_ERROR.rawValue)
@@ -83,8 +83,8 @@ public enum FestivalEngine {
         }
 
         guard invocationStatus == 0 else {
-            throw FestivalEngineError.invocationFailed(
-                "Festival invocation failed with status \(invocationStatus)."
+            throw SwiftFestivalSolverEngineError.invocationFailed(
+                "SwiftFestivalSolver invocation failed with status \(invocationStatus)."
             )
         }
 
@@ -93,10 +93,10 @@ public enum FestivalEngine {
         switch rawResult.status {
         case solvedStatus:
             guard let lurdPointer = rawResult.lurd else {
-                throw FestivalEngineError.invalidSolvedResult
+                throw SwiftFestivalSolverEngineError.invalidSolvedResult
             }
 
-            return FestivalSolveResult(
+            return SwiftFestivalSolverSolveResult(
                 status: .solved,
                 minimumMoves: Int(rawResult.minimum_moves),
                 minimumPushes: Int(rawResult.minimum_pushes),
@@ -105,7 +105,7 @@ public enum FestivalEngine {
             )
 
         case unsolvedStatus:
-            return FestivalSolveResult(
+            return SwiftFestivalSolverSolveResult(
                 status: .unsolved,
                 minimumMoves: 0,
                 minimumPushes: 0,
@@ -114,7 +114,7 @@ public enum FestivalEngine {
             )
 
         default:
-            throw FestivalEngineError.solverError(message ?? "Festival failed with an unknown error.")
+            throw SwiftFestivalSolverEngineError.solverError(message ?? "SwiftFestivalSolver failed with an unknown error.")
         }
     }
 }

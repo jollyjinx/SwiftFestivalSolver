@@ -1,12 +1,12 @@
 import Testing
-@testable import Festival
+@testable import SwiftFestivalSolver
 
-struct FestivalTests {
+struct SwiftFestivalSolverTests {
     @Test
     func solvesSimpleSinglePushLevel() throws {
         let levelText = "#######\n#@  $.#\n#     #\n#######\n"
 
-        let result = try FestivalEngine.solve(
+        let result = try SwiftFestivalSolverEngine.solve(
             levelText: levelText,
             configuration: .init(timeLimitSeconds: 10, cores: 1)
         )
